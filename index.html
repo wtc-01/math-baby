@@ -293,17 +293,18 @@
      }
     }*/
 
+    /* ====== สร้างโจทย์ (เลขสุ่ม 0–5 เท่านั้น และผลลัพธ์ 0–9) ====== */
     function generateQuestion(count) {
 
       while (true) {
 
-        // สุ่มตัวเลข 0–9
-        let nums = [...Array(count)].map(() => Math.floor(Math.random() * 10));
+        // 🔹 สุ่มเลข 0–5 เท่านั้น
+        let nums = [...Array(count)].map(() => Math.floor(Math.random() * 6));
 
         let result = nums[0];
 
-        // ถ้าตัวแรกเกิน 9 ก็เริ่มใหม่
-        if (result > 5) continue;
+        // ถ้าตัวแรกเกิน 9 (กันไว้เผื่อปรับอนาคต)
+        if (result > 9) continue;
 
         let ops = [];
         let valid = true;
@@ -311,12 +312,11 @@
         for (let i = 1; i < count; i++) {
 
           let op = Math.random() < 0.5 ? '+' : '-';
-
           let temp = (op === '+')
             ? result + nums[i]
             : result - nums[i];
 
-          // ❗ เงื่อนไขสำคัญ
+          // 🔴 เงื่อนไขสำคัญ
           if (temp < 0 || temp > 9) {
             valid = false;
             break;
@@ -326,13 +326,13 @@
           ops.push(op);
         }
 
-        // ตรวจผลลัพธ์สุดท้าย
         if (valid && result >= 0 && result <= 9) {
           return { nums, ops, result };
         }
 
       }
     }
+
 
     function createQuestions() {
       answers = [];
